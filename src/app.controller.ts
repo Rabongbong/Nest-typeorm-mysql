@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Query } from '@nestjs/common';
 import { AppService } from './app.service';
+import { UpdateUserDto } from './update-user.dto';
 
 @Controller()
 export class AppController {
@@ -13,5 +14,14 @@ export class AppController {
   @Get('/test')
   getTest(@Query('options') options: string) {
     this.appService.getTest(options);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: number,
+    @Query('options') options: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    this.appService.updateTest(id, options, updateUserDto);
   }
 }
